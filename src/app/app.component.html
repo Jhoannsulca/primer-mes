@@ -1,0 +1,86 @@
+<div class="petals-bg">
+  <div class="petal" *ngFor="let i of [1,2,3,4,5,6,7,8]">🌸</div>
+</div>
+
+<div class="container">
+  <audio #audioPlayer loop (play)="isPlaying=true" (pause)="isPlaying=false" (ended)="isPlaying=false">
+    <source src="assets/audio/nuestra_cancion.mp3" type="audio/mpeg">
+  </audio>
+
+  <header class="hero">
+    <div class="flower-divider">🌷 🌹 🌷</div>
+    <h1>Bienvenida, amorcha ❤️</h1>
+    <p class="subtitle">Nuestro primer mes juntos</p>
+    
+    <div class="counter-dashboard">
+      <div class="time-box">
+        <span class="number">{{ timeTogether.months }}</span>
+        <span class="label">Meses</span>
+      </div>
+      <div class="time-box">
+        <span class="number">{{ timeTogether.days }}</span>
+        <span class="label">Días</span>
+      </div>
+      <div class="time-box">
+        <span class="number">{{ timeTogether.hours }}</span>
+        <span class="label">Horas</span>
+      </div>
+      <div class="time-box">
+        <span class="number">{{ timeTogether.minutes }}</span>
+        <span class="label">Minutos</span>
+      </div>
+      <div class="time-box">
+        <span class="number seconds-number">{{ timeTogether.seconds }}</span>
+        <span class="label">Segundos</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="momentos-section">
+    <div class="flower-divider">🌻 🌺 🌻</div>
+    <h2>Nuestros Momentos</h2>
+    <div class="momentos-grid">
+      <div #momentoCard class="reveal-wrapper" *ngFor="let m of momentos; let i = index" [class.revealed]="cardVisible[i]">
+        <div class="momento-card">
+          <div class="card-img">
+            <img [src]="m.img" [alt]="m.title" loading="lazy" (click)="openLightbox(m.img)">
+          </div>
+          <div class="card-body">
+            <span class="card-date">{{ m.date }}</span>
+            <h3>{{ m.title }}</h3>
+            <p>{{ m.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="action-section">
+    <div class="flower-divider">💐 🌸 💐</div>
+    <button *ngIf="!showLetter" class="btn-surprise" (click)="openLetter()">
+      Presióname ✨
+    </button>
+
+    <div *ngIf="showLetter" class="romantic-letter fade-in">
+      <h2>Para ti...</h2>
+      <p>
+        Feliz primer mes Kely ❤️. En estos días, cada momento contigo ha sido especial (incluso las problemas fueron especiales jejeje...). 
+        Quería hacer algo único usando lo que mejor sé hacer, para demostrarte lo mucho que me importas.
+      </p>
+      <p>Gracias por cada sonrisa, cada salida y por hacer este mes increíble. Te quiero. ❤️</p>
+    </div>
+  </section>
+</div>
+
+<div class="lightbox" *ngIf="selectedImage" (click)="closeLightbox()">
+  <button class="lightbox-close" (click)="closeLightbox()">&times;</button>
+  <img [src]="selectedImage" alt="Momento" class="lightbox-img" (click)="$event.stopPropagation()">
+</div>
+
+<button class="fab fab-audio" (click)="toggleAudio()" [title]="isPlaying ? 'Pausar música' : 'Reproducir música'">
+  {{ isPlaying ? '⏸️' : '🎵' }}
+</button>
+
+<button class="fab fab-back-to-top" *ngIf="showBackToTop" (click)="scrollToTop()" title="Volver arriba">
+  ↑
+</button>
